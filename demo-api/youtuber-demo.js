@@ -26,7 +26,7 @@ db.set(3,y3)
 
 
 app.use(express.json())
-app.post('/youtuber' , (req,res) => {
+app.post('/youtubers' , (req,res) => {
   console.log(req.body)
   db.set(db.size+1,req.body)
   res.json({
@@ -35,7 +35,7 @@ app.post('/youtuber' , (req,res) => {
 })
 
 //Rest API 설계하기
-app.get('/youtuber/:id',function (req,res){
+app.get('/youtubers/:id',function (req,res){
     let {id} = req.params
     console.log(id)
     id = parseInt(id)
@@ -52,9 +52,36 @@ app.get('/youtuber/:id',function (req,res){
 })
 
 app.get('/youtubers' ,(req,res) =>{
+
+    db.forEach(function(youtuber){
+        console.log(youtuber)
+    })
+    //stringfy는 json으로 만들어 놓은 것을 개행을 넣은 문자열로 변환해서 반환
+    //~~~_json 이렇게 형태가 나오는 것은 클린코드 원리와 거리가 멀음
+    var youtubers={}
+    db.forEach(function(value,key){
+        youtubers[key]=value
+    })
+    res.json(youtubers)    
+})
+
+app.delete('/youtubers/:id',function(req,res){
+    let {id} = req.params
+    id = parseInt(id)
+    var youtuber = db.get(id)
+    if(youtuber==undefined){
+        res.json({
+            message : `요청하신 ${id}번은 없는 채널입니다.`
+        })
+    }
+    else{
+        const name = youtuber.title
+    db.delete(id)
     res.json({
-        message : "유튜버들 정보"
-    })    
+        message : `${name}님, 채널을 삭제하셨습니다.`
+    })
+    }
+    
 })
 
 app.listen(3001)
