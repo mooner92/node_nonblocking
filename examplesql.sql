@@ -37,6 +37,7 @@ INSERT INTO shows(showname,show_date,show_price,show_info,show_image_path) VALUE
     '위대한쇼맨','2017-03-21',8000,'마이클베이 감독의 유쾌상쾌통쾌 액션. . .','./src/images/show_images/the_greatest_showman_poster.jpeg');
 SELECT show_price FROM shows WHERE showname = '위대한쇼맨';
 
+
 INSERT INTO orders(ordernum,ordered_at,showname,ordered_username,ordered_useremail,show_date,ordered_quantity,show_price,total_ordered_price) VALUES (
     217,'2017-03-17','위대한쇼맨','박빙구','bing999@hanmail.net','2017-03-21',186,8000,795000);
 SELECT * FROM orders WHERE ordernum = 217;
