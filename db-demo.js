@@ -5,7 +5,8 @@ const connection = mysql.createConnection({
     user : 'root',
     password : 'mypassword', 
     timezone : 'Asia/Seoul',
-    database : 'Youtube'
+    database : 'Youtube',
+    dateStrings : true
 });
 
 connection.query(
