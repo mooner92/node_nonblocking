@@ -4,7 +4,8 @@ const connection = mysql.createConnection({
     host : '127.0.0.1',
     user : 'root',
     password : 'mypassword', 
-    timezone : 'Asia/Seoul',
+    //timezone : 'Asia/Seoul',
+    timezone: "+09:00",
     database : 'Youtube',
     dateStrings : true
 });

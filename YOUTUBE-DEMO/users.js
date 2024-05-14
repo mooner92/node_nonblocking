@@ -78,11 +78,20 @@ router.post('/join', function (req,res){
             message : `입력 값을 다시 확인해주세요.`
         })
     }else{
-        const {userId} = req.body
-        db.set(req.body.userId,req.body)
-    res.status(201).json({
-        message : `${db.get(userId).name}님 환영합니다.`
-    })
+        const {email,name,password,contact} = req.body;
+        conn.query(
+            `INSERT INTO users(email, name, password, contact) VALUES (?, ?, ?, ?)`,[email,name,password,contact],
+            function(err, results, fields){
+                res.status(201).json({
+                    results
+                })
+            }
+        )
+    //     const {userId} = req.body
+    //     db.set(req.body.userId,req.body)
+    // res.status(201).json({
+    //     message : `${db.get(userId).name}님 환영합니다.`
+    // })
 }
     
 })
