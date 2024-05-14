@@ -4,7 +4,8 @@ const router = express.Router()
 // app.listen(3001)
 router.use(express.json())
 const conn = require('../mariadb')
-
+const {body,validationResult} = require('express-validator')
+//body와 입력을 받는 vali~~~ult
 let db = new Map()
 var id = 1
 
@@ -53,7 +54,13 @@ router
             // }
         })
 
-    .post((req,res)=>{
+    .post(
+        body('userId').notEmpty().isInt(),//body메서드를 사용하여 userId값이 비어있으면 안되며, 정수여야 한다는 것을 명시해 줌
+        (req,res)=>{
+            const err = validationResult(req)
+            if(!err.isEmpty()){
+                console.log("err 발생함 userId가 유효성검사에서 통과하지 못함.")
+            }
         const {name,userId} = req.body
         if(name,userId){
             //let channel = req.body
