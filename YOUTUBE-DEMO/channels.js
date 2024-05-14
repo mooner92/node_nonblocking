@@ -54,17 +54,17 @@ router
             // }
         })
 
-    .post(
-        body('userId').notEmpty().isInt(),//body메서드를 사용하여 userId값이 비어있으면 안되며, 정수여야 한다는 것을 명시해 줌
+    .post(//body메서드를 사용하여 userId값이 비어있으면 안되며, 정수여야 한다는 것을 명시해 줌
+        body('userId').notEmpty().isInt().withMessage('userId는 숫자여야 합니다.'),
         (req,res)=>{
             const err = validationResult(req)
             if(!err.isEmpty()){
-                console.log("err 발생함 userId가 유효성검사에서 통과하지 못함.")
+                console.log(err.array())
             }
         const {name,userId} = req.body
-        if(name,userId){
+        if(name){
             //let channel = req.body
-            const {name,userId} = req.body
+            //const {name,userId} = req.body
             let sql = `INSERT INTO channels(name, user_id) VALUES (?, ?)`
             let values = [name,userId]
             conn.query(sql,values,
