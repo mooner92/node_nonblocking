@@ -12,7 +12,6 @@ app.use("/",channelRouter)
 // app.get('/', (req, res) => {
 //   res.send('Hello World!')
 // })
-
 // app.use(express.json())
 // app.post('/test' ,function (req,res){
 //   console.log(req.body.message)

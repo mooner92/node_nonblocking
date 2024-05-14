@@ -7,7 +7,7 @@ router.use(express.json())
 let db = new Map()
 var id = 1
 
-function notFountChannel(){
+function notFountChannel(res){
     res.status(404).json({
         message : "조회할 채널이 없습니다."
     })
@@ -27,10 +27,10 @@ router
                     res.status(200).json(channels) //json array형태 그대로 반환
                 }
                 else{
-                    notFountChannel()
+                    notFountChannel(res)
                 }
             }else{
-                notFountChannel()
+                notFountChannel(res)
                 
             }
         })
@@ -61,7 +61,7 @@ router
         id = parseInt(id)
         var channel = db.get(id)
         if(!channel){ //객체의 있,없으로 바로 구분
-            notFountChannel()
+            notFountChannel(res)
         }else{
             res.status(200).json(channel)
         }
@@ -83,7 +83,7 @@ router
                 message : `채널명이 정상적으로 수정되었습니다. 기존 ${oldTitle} -> 수정 ${newTitle}`
             })
         }else{
-            notFountChannel()
+            notFountChannel(res)
         }
 
         //res.send("개별 수정")
@@ -100,7 +100,7 @@ router
                 message : `${channel.channelTitle}이 정상적으로 삭제되었습니다.`
             })
         }else{
-            notFountChannel()
+            notFountChannel(res)
         }
         //res.send("개별 삭제")
     }) // 채널 개별 삭제
