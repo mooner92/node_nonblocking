@@ -8,7 +8,7 @@ const userRouter = require('./YOUTUBE-DEMO/users')
 const channelRouter = require('./YOUTUBE-DEMO/channels')
 
 app.use("/",userRouter)
-app.use("/channels")
+app.use("/",channelRouter)
 // app.get('/', (req, res) => {
 //   res.send('Hello World!')
 // })

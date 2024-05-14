@@ -1,5 +1,21 @@
 const express = require('express')
+const connection = require('../mariadb')
 const router = express.Router() //라우터를 사용하여 user-demo를 모듈화하였음
+const conn = require('../mariadb')
+
+
+// conn.query(
+//     'SELECT * FROM `users`',
+//     function(err, results, fields){
+//         //console.log(results);
+//         // var arr = [1,2,3];
+//         // console.log(arr[0]);
+//         var {id,email,name} = results[0];
+//         console.log(id);
+//         console.log(email);
+//         console.log(name);
+//     }
+// )
 // const app = express()
 // app.listen(3001)
 router.use(express.json())
@@ -8,8 +24,8 @@ let db = new Map()
 var id = 1
 
 function isEmpty(obj){
-    //if (obj.constructor == Object) //타입이 object가 맞냐
-    if(Object.keys(obj).length){
+    //if (Object.keys(obj).length) //타입이 object가 맞냐
+    if(obj.constructor == Object){
         return true;
     }else{
         return false;
@@ -31,7 +47,7 @@ router.post('/login', function (req,res){
     console.log(req.body) //userId ,pwd를 받음
     const {userId,passWd} = req.body
     //var idExist = false
-    //var loginUser = idCheck(userId)
+    var loginUser = idCheck(userId)
 
     if(!isEmpty(idCheck(userId))){
         //console.log("same")
@@ -71,22 +87,30 @@ router.post('/join', function (req,res){
     
 })
 
-router.put()
+//router.put()
 router
     .route('/users')
     .get(function (req,res){
-    let {userId} = req.body
-    const user = db.get(userId)
-    if (user) {
-        res.status(200).json({
-            userId : user.userId,
-            name : user.name
-        })
-    }else{
-        res.status(404).strictContentLength({
-            message : "회원 정보 없음"
-        })
-    }
+    let {email} = req.body //body값에 숨김 개인정보라서 email로 변경함
+    conn.query(
+        `SELECT * FROM users WHERE email = ?`,email,
+        function(err, results, fields){
+            res.status(200).json({
+                results
+            })
+        }
+    )
+    // const user = db.get(userId)
+    // if (user) {
+    //     res.status(200).json({
+    //         userId : user.userId,
+    //         name : user.name
+    //     })
+    // }else{
+    //     res.status(404).json({
+    //         message : "회원 정보 없음"
+    //     })
+    // }
     })
 
     .delete(function (req,res){
@@ -98,11 +122,11 @@ router
             message : `${user.name}님 다음에 또 뵙겠습니다.`
         })
     }else{
-        res.status(404).strictContentLength({
+        res.status(404).json({
             message : "회원 정보 없음"
         })
         
     }
     })
 
-moudule.exports = router //모듈화
+module.exports = router //모듈화

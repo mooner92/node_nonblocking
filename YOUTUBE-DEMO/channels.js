@@ -105,5 +105,5 @@ router
         //res.send("개별 삭제")
     }) // 채널 개별 삭제
 
-moudule.exports = router //모듈화
+module.exports = router //모듈화
 ////
