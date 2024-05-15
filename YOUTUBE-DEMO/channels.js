@@ -4,7 +4,7 @@ const router = express.Router()
 // app.listen(3001)
 router.use(express.json())
 const conn = require('../mariadb')
-const {body,validationResult} = require('express-validator')
+const {body,param,validationResult} = require('express-validator')
 //body와 입력을 받는 vali~~~ult
 let db = new Map()
 var id = 1
@@ -17,25 +17,29 @@ function notFountChannel(res){
 
 router
     .route('/')
-    .get((req,res)=>{
+    .get(
+        body('userId').notEmpty().isInt().withMessage('userId는 숫자여야 합니다.'),
+        (req,res)=>{
+            const err = validationResult(req)
+            if(!err.isEmpty()){
+                console.log(err.array())
+                return res.status(400).json(err.array()) //에러 걸리면 리턴하게끔 작성해줌.
+            }
         var {userId} = req.body
         // var channels = [] //json array로 사용
-        if(userId){
             conn.query(//단축평가, 우선순위,단축조건?
             `SELECT * FROM channels WHERE user_id = ?`,userId,
             function(err, results){
+                if(err){
+                    console.log(err);
+                    return res.status(400).end();
+                }
                 if(results.length)
-                res.status(200).json({
-                    results
-                }).end()
+                res.status(200).json(results)
                 else
                 notFountChannel(res);
             }
         )
-        }
-        else{
-            res.status(400).end();
-        }
         
             // if (userId && userId){
             //     db.forEach(function(value,key) {
@@ -56,26 +60,32 @@ router
         })
 
     .post(//body메서드를 사용하여 userId값이 비어있으면 안되며, 정수여야 한다는 것을 명시해 줌
-        body('userId').notEmpty().isInt().withMessage('userId는 숫자여야 합니다.'),
+        [body('userId').notEmpty().isInt().withMessage('userId는 숫자여야 합니다.'),
+    body('name').notEmpty().isString().withMessage('채널 이름은 string이여야 합니다.')],
         (req,res)=>{
             const err = validationResult(req)
             if(!err.isEmpty()){
                 console.log(err.array())
+                return res.status(400).json(err.array()) //에러 걸리면 리턴하게끔 작성해줌.
             }
         const {name,userId} = req.body
-        if(name){
+        
             //let channel = req.body
             //const {name,userId} = req.body
             let sql = `INSERT INTO channels(name, user_id) VALUES (?, ?)`
             let values = [name,userId]
             conn.query(sql,values,
                 function(err, results){
+                    if(err){
+                        console.log(err);
+                        return res.status(400).end();
+                    }
                     res.status(201).json({
                         results
                     })
                 }
             )
-        }
+        
         // if( req.body.name){
         //     let channel = req.body
         //     db.set(id++,channel)
@@ -95,12 +105,23 @@ router
 
 router
     .route('/:id')
-    .get((req,res)=>{
+    .get(
+        param('id').notEmpty().withMessage('채널 ID 필요함.'),
+        (req,res)=>{
+            const err = validationResult(req)
+            if(!err.isEmpty()){
+                console.log(err.array())
+                return res.status(400).json(err.array()) //에러 걸리면 리턴하게끔 작성해줌.
+            }
         let {id} = req.params
         id = parseInt(id)
         conn.query(
             `SELECT * FROM channels WHERE id = ?`,id,
             function(err, results){
+                if(err){
+                    console.log(err);
+                    return res.status(400).end();
+                }
                 if(results.length)
                 res.status(200).json({
                     results

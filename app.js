@@ -7,8 +7,8 @@ app.listen(port)
 const userRouter = require('./YOUTUBE-DEMO/users')
 const channelRouter = require('./YOUTUBE-DEMO/channels')
 
-app.use("/",userRouter)
-app.use("/",channelRouter)
+app.use("/users/",userRouter)
+app.use("/channels/",channelRouter)
 // app.get('/', (req, res) => {
 //   res.send('Hello World!')
 // })
