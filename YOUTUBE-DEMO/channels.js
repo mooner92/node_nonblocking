@@ -52,6 +52,7 @@ router
             //     notFountChannel(res)
                 
             // }
+            // 
         })
 
     .post(//body메서드를 사용하여 userId값이 비어있으면 안되며, 정수여야 한다는 것을 명시해 줌
