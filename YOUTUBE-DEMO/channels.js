@@ -10,11 +10,13 @@ const {body,param,validationResult} = require('express-validator')
 // var id = 1
 
 //함수 모듈화하기
-const validate=(req,res)=>{
+const validate=(req,res,next)=>{
     const err = validationResult(req)
             if(!err.isEmpty()){
                 console.log(err.array())
                 return res.status(400).json(err.array()) //에러 걸리면 리턴하게끔 작성해줌.
+            }else{
+                return next();
             }
 }
 
@@ -30,7 +32,7 @@ router
         [body('userId').notEmpty().isInt().withMessage('userId는 숫자여야 합니다.'),
         validate
     ],
-        (req,res)=>{
+        (req,res,next)=>{
             // const err = validationResult(req)
             // if(!err.isEmpty()){
             //     console.log(err.array())
@@ -73,7 +75,7 @@ router
     .post(//body메서드를 사용하여 userId값이 비어있으면 안되며, 정수여야 한다는 것을 명시해 줌
         [body('userId').notEmpty().isInt().withMessage('userId는 숫자여야 합니다.'),
     body('name').notEmpty().isString().withMessage('채널 이름은 string이여야 합니다.'),validate],
-        (req,res)=>{
+        (req,res,next)=>{
             // const err = validationResult(req)
             // if(!err.isEmpty()){
             //     console.log(err.array())
@@ -118,7 +120,7 @@ router
     .route('/:id')
     .get(
         [param('id').notEmpty().withMessage('채널 ID 필요함.'),validate],
-        (req,res)=>{
+        (req,res,next)=>{
             // const err = validationResult(req)
             // if(!err.isEmpty()){
             //     console.log(err.array())
@@ -154,7 +156,7 @@ router
     .put(
         [param('id').notEmpty().withMessage('채널 ID 필요함.'),
     body('name').notEmpty().isString().withMessage('채널명 오류입니다.'),validate],
-        (req,res)=>{
+        (req,res,next)=>{
             // const err = validationResult(req)
             // if(!err.isEmpty()){
             //     console.log(err.array())
@@ -204,7 +206,7 @@ router
 
     .delete([
         param('id').notEmpty().withMessage('채널 ID 필요함.'),validate],
-    (req,res)=>{
+    (req,res,next)=>{
         const err = validationResult(req)
             if(!err.isEmpty()){
                 console.log(err.array())
