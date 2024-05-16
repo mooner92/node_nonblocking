@@ -12,11 +12,11 @@ const {body,param,validationResult} = require('express-validator')
 //함수 모듈화하기
 const validate=(req,res,next)=>{
     const err = validationResult(req)
-            if(!err.isEmpty()){
+            if(err.isEmpty()){
+                return next();
+            }else{
                 console.log(err.array())
                 return res.status(400).json(err.array()) //에러 걸리면 리턴하게끔 작성해줌.
-            }else{
-                return next();
             }
 }
 
@@ -183,7 +183,6 @@ router
                         message : `${results.affectedRows}개의 변경이 있습니다.`
                     })
                 }
-                
             }
         )
         // var channel = db.get(id)

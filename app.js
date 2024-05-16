@@ -1,8 +1,10 @@
 const express = require('express')
+const dotenv = require('dotenv')
 const app = express()
-const port = 3001
+dotenv.config()
+//const port = 3001
 
-app.listen(port)
+app.listen(process.env.PORT)
 
 const userRouter = require('./YOUTUBE-DEMO/users')
 const channelRouter = require('./YOUTUBE-DEMO/channels')
