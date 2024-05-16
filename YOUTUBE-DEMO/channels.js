@@ -244,4 +244,3 @@ router
     }) // 채널 개별 삭제
 
 module.exports = router //모듈화
-////
