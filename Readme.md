@@ -27,6 +27,11 @@ https://mooner92-pgslectures.notion.site/2024-05-10-dbd55c322c804659be3061e5bcdf
 ### 05-13 [월] 정리내용
 https://mooner92-pgslectures.notion.site/2024-05-13-a222797732b84f0ba205f4e2f011b7b8?pvs=4
 
+### 05-14 [화] 정리내용
+https://mooner92-pgslectures.notion.site/2024-05-14-40089b54a0714ed9b92b8c5dcb06051e?pvs=4
+
+### 05-15 [수] 정리내용
+https://mooner92-pgslectures.notion.site/2024-05-15-bf700d2b205247829991be2c47bc73f2?pvs=4
 
 노션에 학습 내용 정리 해 두었습니다!
 
