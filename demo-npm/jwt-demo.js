@@ -13,3 +13,4 @@ console.log(token);
 // 검증에 성공하면, 페이로드 값을 확인할 수 있음.
 var decoded = jwt.verify(token, process.env.PRIVATE_KEY);
 console.log(decoded) // bar
+///
