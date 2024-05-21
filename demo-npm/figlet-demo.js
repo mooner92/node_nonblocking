@@ -15,3 +15,5 @@ figlet("hello", function (err, data) {
   //두 번째 매개변수 function 함수를 실행(콜백)
   console.log(data);
 });
+
+////
